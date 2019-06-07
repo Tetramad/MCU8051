@@ -16,4 +16,4 @@ L293D H-bridge is used for DC motor control.
 - Learn C8051F330 ***done***
 - Design circuit ***done***
 - Programming MCU ***done***
-- Test everything works!
+- Test everything works! **done***
