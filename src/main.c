@@ -25,7 +25,7 @@ void switch_isr(void) interrupt INT0
     // MID SPEED
     P1 &= 0xF7; // MAX LED off
     P1 |= 0x04; // MID LED on
-    PCA0CN &= 0xBF // PCA disable
+    PCA0CN &= 0xBF; // PCA disable
     PCA0L = 0x00;
     PCA0H = 0x00; // [0000 0000 0000 0000]
     PCA0CPL0 = 0x00;
@@ -38,7 +38,7 @@ void switch_isr(void) interrupt INT0
     // MAX SPEED
     P1 &= 0xFB; // MID LED off
     P1 |= 0x08; // MAX LED on
-    PCA0CN &= 0xBF // PCA disable
+    PCA0CN &= 0xBF; // PCA disable
     PCA0L = 0x00;
     PCA0H = 0x00; // [0000 0000 0000 0000]
     PCA0CPL0 = 0xFF;
@@ -49,7 +49,13 @@ void switch_isr(void) interrupt INT0
 
 void main(void)
 {
-  PCA0MD &= 0xBF; // &=[1011 1111] disable Watchdog timer
+  PCA0MD = 0x08; // =[0000 1000] disable Watchdog timer and PCA0 use system clock
+  PCA0CN = 0x00; // =[0000 0000] initialize PCA0
+  PCA0L = 0x00;
+  PCA0H = 0x00;
+  PCA0CPL0 = 0x00;
+  PCA0CPH0 = 0x00;
+  PCA0CPM0 = 0x42; // =[0100 0010] PCA becomes 8bit PWM
   
   P0MDIN = 0xFF; // =[1111 1111] set P0.n not analog input
   P1MDIN = 0xFF; // =[1111 1111] set P1.n not analog input
@@ -58,14 +64,7 @@ void main(void)
   P0SKIP = 0xFF; // =[1111 1111] skip for aligning P1.7 to CEX0
   P1SKIP = 0x7F; // =[0111 1111] skip for aligning P1.7 to CEX0
   P0 = 0x00; // =[0000 0000] initialize P0.n
-  P1 = 0x80; // =[1000 0000] initialize P1.n
-  
-  PCA0CN = 0x00; // =[0000 0000] initialize PCA0
-  PCA0L = 0x00;
-  PCA0H = 0x00;
-  PCA0CPL0 = 0x00;
-  PCA0CPH0 = 0x00;
-  PCA0CPM0 = 0xC2 // =[1100 0010] PCA becomes 16bit PWM
+  P1 = 0x82; // =[1000 0010] initialize P1.n
   
   XBR1 = 0x41; // =[0100 0001] crossbar enable and CEX0 routed to Port pin
   
