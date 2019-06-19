@@ -1,4 +1,4 @@
-# JNU Microprocessor Team Project
+# JNU Microprocessor 2019Q1 Team Project
 | IDE             | MCU                      |
 |-----------------|--------------------------|
 | *Keil* μVision5 | *Silicon Labs* C8051F330 |
